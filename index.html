@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Xavier Alonso's personal portfolio website.">
+    <title>Xavier Alonso | Personal Portfolio</title>
+
+    <style>
+        /* =========================
+           SLATE & MIST COLOUR PALETTE
+        ========================== */
+        :root {
+            --primary-dark: #263238;
+            --primary-main: #455A64;
+            --primary-light: #78909C;
+            --background: #ECEFF1;
+            --background-secondary: #CFD8DC;
+            --card: #FFFFFF;
+            --accent: #90A4AE;
+            --accent-soft: #E2E8EB;
+            --text-dark: #263238;
+            --text-main: #455A64;
+            --text-muted: #546A73;
+            --text-light: #FFFFFF;
+            --border: #CFD8DC;
+            --shadow: rgba(38, 50, 56, 0.12);
+            --hover: #37474F;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        html {
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            --background: #172126;
+            --background-secondary: #263238;
+            --card: #202D33;
+            --accent: #B0BEC5;
+            --accent-soft: #37474F;
+            --text-dark: #ECEFF1;
+            --text-main: #CFD8DC;
+            --text-muted: #B0BEC5;
+            --border: #455A64;
+            --shadow: rgba(0, 0, 0, 0.25);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid #90A4AE;
+            outline-offset: 4px;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(1100px, 100%);
+            margin: 0 auto;
+        }
+
+        /* =========================
+           HEADER AND NAVIGATION
+        ========================== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-dark);
+            box-shadow: 0 3px 10px var(--shadow);
+        }
+
+        nav {
+            width: min(1100px, 100%);
+            margin: auto;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: var(--text-light);
+            font-size: 1.25rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a[aria-current="page"] {
+            color: var(--accent);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle,
+        .menu-toggle {
+            border: 1px solid var(--primary-light);
+            color: var(--text-light);
+            background: transparent;
+            border-radius: 25px;
+            padding: 8px 12px;
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+        .hero {
+            min-height: 82vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 25px;
+            background:
+                linear-gradient(rgba(38, 50, 56, 0.9), rgba(69, 90, 100, 0.9)),
+                url("your-background-image.jpg") center / cover no-repeat;
+            color: var(--text-light);
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            line-height: 1.15;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            font-size: 1.1rem;
+        }
+
+        .typing-line {
+            margin-top: 20px !important;
+            min-height: 32px;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .cursor {
+            display: inline-block;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: 2px solid transparent;
+            border-radius: 30px;
+            background: var(--accent);
+            color: var(--primary-dark);
+            font-weight: bold;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .button:hover {
+            background: var(--text-light);
+            transform: translateY(-3px);
+        }
+
+        /* =========================
+           SHARED SECTION STYLES
+        ========================== */
+        section {
+            padding: 75px 25px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 42px;
+        }
+
+        .section-title h2 {
+            color: var(--text-dark);
+            font-size: clamp(1.8rem, 4vw, 2.3rem);
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+        }
+
+        /* =========================
+           ABOUT
+        ========================== */
+        .about {
+            background: var(--card);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 100%;
+            max-width: 350px;
+            height: 350px;
+            margin: auto;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 5px solid var(--background-secondary);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .about-text h3 {
+            color: var(--text-dark);
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            color: var(--primary-main);
+            font-weight: bold;
+        }
+
+        body.dark-mode .highlight {
+            color: var(--accent);
+        }
+
+        /* =========================
+           PROJECTS
+        ========================== */
+        .projects {
+            background: var(--background);
+        }
+
+        .project-tools {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 0 28px;
+        }
+
+        .filter-button {
+            border: 1px solid var(--primary-main);
+            border-radius: 25px;
+            padding: 8px 17px;
+            background: transparent;
+            color: var(--text-main);
+        }
+
+        .filter-button.active,
+        .filter-button:hover {
+            background: var(--primary-main);
+            color: #FFFFFF;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .project-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px var(--shadow);
+        }
+
+        .project-card h3 {
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            flex: 1;
+            color: var(--text-muted);
+        }
+
+        .project-tag {
+            display: inline-block;
+            align-self: flex-start;
+            margin-top: 18px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: var(--accent-soft);
+            color: var(--text-dark);
+            font-size: 0.82rem;
+        }
+
+        /* =========================
+           HOBBIES AND GOALS
+        ========================== */
+        .hobbies {
+            background: var(--card);
+        }
+
+        .hobby-grid,
+        .goal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .hobby-card,
+        .goal-card {
+            padding: 28px;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .hobby-card {
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .hobby-icon {
+            font-size: 2.4rem;
+            margin-bottom: 12px;
+        }
+
+        .hobby-card h3,
+        .goal-card h3 {
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .hobby-card p,
+        .goal-card p {
+            color: var(--text-muted);
+        }
+
+        .goals {
+            background: var(--card);
+        }
+
+        /* =========================
+           CONTACT
+        ========================== */
+        .contact {
+            background: var(--primary-dark);
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .contact .section-title h2 {
+            color: var(--text-light);
+        }
+
+        .contact .section-title p {
+            color: var(--background-secondary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .social-links a {
+            padding: 10px 20px;
+            border: 1px solid var(--primary-light);
+            border-radius: 30px;
+            color: var(--text-light);
+            transition: 0.2s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* =========================
+           FOOTER AND BACK TO TOP
+        ========================== */
+        footer {
+            padding: 20px;
+            text-align: center;
+            background: #1B2529;
+            color: #CFD8DC;
+            font-size: 0.9rem;
+        }
+
+        #backToTop {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            width: 48px;
+            height: 48px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--primary-main);
+            color: #FFFFFF;
+            font-size: 1.4rem;
+            box-shadow: 0 5px 15px var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: 0.2s ease;
+            z-index: 999;
+        }
+
+        #backToTop.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #backToTop:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+        ========================== */
+        @media (max-width: 900px) {
+            nav {
+                flex-wrap: wrap;
+            }
+
+            .project-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .about-content {
+                grid-template-columns: 1fr 1.3fr;
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                justify-content: space-between;
+            }
+
+            .menu-toggle {
+                display: inline-block;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 0;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .profile-image {
+                height: 280px;
+                max-width: 280px;
+            }
+
+            .hobby-grid,
+            .goal-grid,
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .hero {
+                min-height: 70vh;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .logo {
+                font-size: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.35rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .theme-toggle,
+            .menu-toggle {
+                padding: 7px 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Respect reduced-motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Persistent navigation -->
+    <header>
+        <nav aria-label="Main navigation">
+            <a class="logo" href="#home">XAVIER ALONSO</a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#hobbies">Hobbies</a></li>
+                <li><a href="#goals">Goals</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" type="button"
+                        aria-pressed="false" aria-label="Switch to dark mode">
+                    Dark mode
+                </button>
+                <button class="menu-toggle" id="menuToggle" type="button"
+                        aria-expanded="false" aria-controls="navLinks">
+                    Menu
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1><span id="greeting">Hello</span>, I'm <span>Xavier</span></h1>
+                <p>
+                    A third-year student from Universiti Malaysia Sarawak (UNIMAS),
+                    passionate about learning, creativity, technology, and photography.
+                </p>
+                <p class="typing-line" aria-live="polite">
+                    I love <span id="typingText"></span><span class="cursor" aria-hidden="true">|</span>
+                </p>
+                <a href="#projects" class="button">Explore My Projects</a>
+            </div>
+        </section>
+
+        <!-- Projects: at least five project cards -->
+        <section class="projects" id="projects">
+            <div class="container">
+                <div class="section-title">
+                    <h2>My Projects</h2>
+                    <p>A selection of projects, concepts, and creative work.</p>
+                </div>
+
+                <div class="project-tools" aria-label="Filter projects">
+                    <button class="filter-button active" type="button" data-filter="all"
+                            aria-pressed="true">All</button>
+                    <button class="filter-button" type="button" data-filter="web"
+                            aria-pressed="false">Web & Apps</button>
+                    <button class="filter-button" type="button" data-filter="creative"
+                            aria-pressed="false">Creative</button>
+                    <button class="filter-button" type="button" data-filter="design"
+                            aria-pressed="false">Design</button>
+                </div>
+
+                <div class="project-grid" id="projectGrid">
+                    <article class="project-card" data-category="web">
+                        <h3>Personal Portfolio Website</h3>
+                        <p>A responsive website presenting my background, interests, goals, and selected work.</p>
+                        <span class="project-tag">Web Development</span>
+                    </article>
+
+                    <article class="project-card" data-category="web">
+                        <h3>Smart Home Application</h3>
+                        <p>A system-design project exploring how users can monitor and control smart home devices.</p>
+                        <span class="project-tag">Application Design</span>
+                    </article>
+
+                    <article class="project-card" data-category="creative">
+                        <h3>Wildlife Photography</h3>
+                        <p>A photography collection focused on wildlife, nature, and capturing meaningful moments.</p>
+                        <span class="project-tag">Photography</span>
+                    </article>
+
+                    <article class="project-card" data-category="web">
+                        <h3>Student Services Mobile App</h3>
+                        <p>A mobile app concept intended to make student services easier to access and use.</p>
+                        <span class="project-tag">UI/UX & Systems</span>
+                    </article>
+
+                    <article class="project-card" data-category="design">
+                        <h3>Mita Bakery Branding</h3>
+                        <p>A branding concept combining warm bakery colours with a digital shopping-cart identity.</p>
+                        <span class="project-tag">Visual Design</span>
+                    </article>
+
+                    <article class="project-card" data-category="creative">
+                        <h3>Event Photography</h3>
+                        <p>Documenting campus activities and events through thoughtful composition and storytelling.</p>
+                        <span class="project-tag">Media & Photography</span>
+                    </article>
+                </div>
+                <p id="filterStatus" class="visually-hidden" aria-live="polite"></p>
+            </div>
+        </section>
+
+        <!-- About Me -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="section-title">
+                    <h2>About Me</h2>
+                    <p>Get to know me a little better.</p>
+                </div>
+
+                <div class="about-content">
+                    <div>
+                        <!-- Replace xavier.jpg with your own image file -->
+                        <img src="xavier.jpg"
+                             alt="Portrait of Xavier Alonso, a UNIMAS student"
+                             class="profile-image">
+                    </div>
+
+                    <div class="about-text">
+                        <h3>Hello, I'm Xavier Alonso.</h3>
+                        <p>
+                            I am a third-year student at
+                            <span class="highlight">Universiti Malaysia Sarawak (UNIMAS)</span>.
+                        </p>
+                        <p>
+                            I enjoy discovering new knowledge, developing creative and technical
+                            skills, and creating simple yet meaningful projects.
+                        </p>
+                        <p>
+                            This website is my personal space to share my academic journey,
+                            current goals, interests, and hobbies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hobbies -->
+        <section class="hobbies" id="hobbies">
+            <div class="container">
+                <div class="section-title">
+                    <h2>My Hobbies</h2>
+                    <p>Activities and interests I enjoy exploring in my free time.</p>
+                </div>
+
+                <div class="hobby-grid">
+                    <article class="hobby-card">
+                        <div class="hobby-icon" aria-hidden="true">📷</div>
+                        <h3>Photography</h3>
+                        <p>Capturing meaningful moments, exploring creative perspectives, and telling stories through photography.</p>
+                    </article>
+
+                    <article class="hobby-card">
+                        <div class="hobby-icon" aria-hidden="true">🎬</div>
+                        <h3>Watching Anime</h3>
+                        <p>Enjoying captivating anime, exploring diverse storylines, and discovering animated worlds.</p>
+                    </article>
+
+                    <article class="hobby-card">
+                        <div class="hobby-icon" aria-hidden="true">📖</div>
+                        <h3>Reading the Bible</h3>
+                        <p>Reflecting on meaningful teachings and finding time for Scripture and faith.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Goals -->
+        <section class="goals" id="goals">
+            <div class="container">
+                <div class="section-title">
+                    <h2>My Goals</h2>
+                    <p>A few things I hope to achieve and continue developing.</p>
+                </div>
+
+                <div class="goal-grid">
+                    <article class="goal-card">
+                        <h3>Academic Growth</h3>
+                        <p>Continue improving my knowledge and skills throughout my university journey.</p>
+                    </article>
+
+                    <article class="goal-card">
+                        <h3>Creative Skills</h3>
+                        <p>Develop my photography, design, and other creative technical skills.</p>
+                    </article>
+
+                    <article class="goal-card">
+                        <h3>Future Projects</h3>
+                        <p>Turn creative ideas into useful and meaningful projects I can be proud of.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Let's Connect</h2>
+                    <p>Feel free to get in touch or connect through the platforms below.</p>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://www.instagram.com/xvier.png/"
+                       target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://www.facebook.com/share/1FJG9ZrMu4/?mibextid=wwXIfr"
+                       target="_blank" rel="noopener noreferrer">Facebook</a>
+                    <a href="https://www.linkedin.com/in/xavier-alonso-a07599339"
+                       target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="mailto:xaviernyanau@gmail.com">Email Me</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Xavier Alonso. All Rights Reserved.</p>
+    </footer>
+
+    <button id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
+
+    <script>
+        // Feature 1: Greeting changes according to the current time.
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            let greeting = "Good evening";
+
+            if (hour < 12) {
+                greeting = "Good morning";
+            } else if (hour < 18) {
+                greeting = "Good afternoon";
+            }
+
+            document.getElementById("greeting").textContent = greeting;
+        }
+
+        updateGreeting();
+
+        // Feature 2: Typing animation cycles through interests.
+        const interests = [
+            "photography",
+            "technology",
+            "creativity",
+            "learning new things"
+        ];
+
+        let interestIndex = 0;
+        let characterIndex = 0;
+        let deleting = false;
+        const typingText = document.getElementById("typingText");
+
+        function typeInterest() {
+            const currentInterest = interests[interestIndex];
+
+            if (!deleting) {
+                characterIndex++;
+                typingText.textContent = currentInterest.substring(0, characterIndex);
+
+                if (characterIndex >= currentInterest.length) {
+                    deleting = true;
+                    setTimeout(typeInterest, 1200);
+                    return;
+                }
+            } else {
+                characterIndex--;
+                typingText.textContent = currentInterest.substring(0, characterIndex);
+
+                if (characterIndex <= 0) {
+                    deleting = false;
+                    interestIndex = (interestIndex + 1) % interests.length;
+                }
+            }
+
+            setTimeout(typeInterest, deleting ? 50 : 100);
+        }
+
+        // Avoid continuous animation when the visitor requests reduced motion.
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduceMotion) {
+            typingText.textContent = interests[0];
+        } else {
+            typeInterest();
+        }
+
+        // Feature 3: Show/hide back-to-top button according to scroll position.
+        const backToTop = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", function () {
+            backToTop.classList.toggle("show", window.scrollY > 300);
+        });
+
+        // Feature 4: Smoothly return to the top when the button is activated.
+        backToTop.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+        });
+
+        // Feature 5: Update the copyright year automatically.
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Feature 6: Filter project cards by category.
+        const filterButtons = document.querySelectorAll(".filter-button");
+        const projectCards = document.querySelectorAll(".project-card");
+        const filterStatus = document.getElementById("filterStatus");
+
+        filterButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                const selectedFilter = button.dataset.filter;
+                let visibleCount = 0;
+
+                filterButtons.forEach(function (item) {
+                    const isActive = item === button;
+                    item.classList.toggle("active", isActive);
+                    item.setAttribute("aria-pressed", String(isActive));
+                });
+
+                projectCards.forEach(function (card) {
+                    const shouldShow =
+                        selectedFilter === "all" ||
+                        card.dataset.category === selectedFilter;
+
+                    card.hidden = !shouldShow;
+                    if (shouldShow) visibleCount++;
+                });
+
+                filterStatus.textContent = visibleCount + " projects shown.";
+            });
+        });
+
+        // Feature 7: Toggle between light and dark colour themes.
+        const themeToggle = document.getElementById("themeToggle");
+
+        themeToggle.addEventListener("click", function () {
+            const isDark = document.body.classList.toggle("dark-mode");
+
+            themeToggle.textContent = isDark ? "Light mode" : "Dark mode";
+            themeToggle.setAttribute("aria-pressed", String(isDark));
+            themeToggle.setAttribute(
+                "aria-label",
+                isDark ? "Switch to light mode" : "Switch to dark mode"
+            );
+        });
+
+        // Feature 8: Expand/collapse navigation on smaller screens.
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", function () {
+            const isOpen = navLinks.classList.toggle("open");
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+            menuToggle.textContent = isOpen ? "Close" : "Menu";
+        });
+
+        // Close the mobile menu after a navigation link is selected.
+        navLinks.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.textContent = "Menu";
+            });
+        });
+    </script>
+</body>
+</html>
